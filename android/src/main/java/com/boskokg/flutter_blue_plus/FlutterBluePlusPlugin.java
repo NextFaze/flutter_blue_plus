@@ -183,7 +183,7 @@ public class FlutterBluePlusPlugin implements FlutterPlugin, MethodCallHandler, 
       {
         int logLevelIndex = (int)call.arguments;
         logLevel = LogLevel.values()[logLevelIndex];
-        result.success(null);
+        result.success(true);
         break;
       }
 
@@ -265,7 +265,7 @@ public class FlutterBluePlusPlugin implements FlutterPlugin, MethodCallHandler, 
       case "stopScan":
       {
         stopScan();
-        result.success(null);
+        result.success(true);
         break;
       }
 
@@ -330,7 +330,7 @@ public class FlutterBluePlusPlugin implements FlutterPlugin, MethodCallHandler, 
           BluetoothDeviceCache bluetoothDeviceCache = mDevices.get(deviceId);
           if(bluetoothDeviceCache != null && !isConnected) {
             if(bluetoothDeviceCache.gatt.connect()){
-              result.success(null);
+              result.success(true);
             } else {
               result.error("reconnect_error", "error when reconnecting to device", null);
             }
@@ -345,7 +345,7 @@ public class FlutterBluePlusPlugin implements FlutterPlugin, MethodCallHandler, 
             gattServer = device.connectGatt(context, options.getAndroidAutoConnect(), mGattCallback);
           }
           mDevices.put(deviceId, new BluetoothDeviceCache(gattServer));
-          result.success(null);
+          result.success(true);
         });
         break;
       }
@@ -363,7 +363,7 @@ public class FlutterBluePlusPlugin implements FlutterPlugin, MethodCallHandler, 
             gattServer.close();
           }
         }
-        result.success(null);
+        result.success(true);
         break;
       }
 
@@ -386,7 +386,7 @@ public class FlutterBluePlusPlugin implements FlutterPlugin, MethodCallHandler, 
         try {
           BluetoothGatt gatt = locateGatt(deviceId);
           if(gatt.discoverServices()) {
-            result.success(null);
+            result.success(true);
           } else {
             result.error("discover_services_error", "unknown reason", null);
           }
@@ -435,7 +435,7 @@ public class FlutterBluePlusPlugin implements FlutterPlugin, MethodCallHandler, 
         }
 
         if(gattServer.readCharacteristic(characteristic)) {
-          result.success(null);
+          result.success(true);
         } else {
           result.error("read_characteristic_error", "unknown reason, may occur if readCharacteristic was called before last read finished.", null);
         }
@@ -466,7 +466,7 @@ public class FlutterBluePlusPlugin implements FlutterPlugin, MethodCallHandler, 
         }
 
         if(gattServer.readDescriptor(descriptor)) {
-          result.success(null);
+          result.success(true);
         } else {
           result.error("read_descriptor_error", "unknown reason, may occur if readDescriptor was called before last read finished.", null);
         }
@@ -511,7 +511,7 @@ public class FlutterBluePlusPlugin implements FlutterPlugin, MethodCallHandler, 
           return;
         }
 
-        result.success(null);
+        result.success(true);
         break;
       }
 
@@ -548,7 +548,7 @@ public class FlutterBluePlusPlugin implements FlutterPlugin, MethodCallHandler, 
           return;
         }
 
-        result.success(null);
+        result.success(true);
         break;
       }
 
@@ -616,7 +616,7 @@ public class FlutterBluePlusPlugin implements FlutterPlugin, MethodCallHandler, 
           }
         }
 
-        result.success(null);
+        result.success(true);
         break;
       }
 
@@ -652,7 +652,7 @@ public class FlutterBluePlusPlugin implements FlutterPlugin, MethodCallHandler, 
           int mtu = request.getMtu();
           if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             if(gatt.requestMtu(mtu)) {
-              result.success(null);
+              result.success(true);
             } else {
               result.error("requestMtu", "gatt.requestMtu returned false", null);
             }
@@ -673,7 +673,7 @@ public class FlutterBluePlusPlugin implements FlutterPlugin, MethodCallHandler, 
         try {
           gatt = locateGatt(remoteId);
           if(gatt.readRemoteRssi()) {
-            result.success(null);
+            result.success(true);
           } else {
             result.error("readRssi", "gatt.readRemoteRssi returned false", null);
           }
@@ -805,7 +805,7 @@ public class FlutterBluePlusPlugin implements FlutterPlugin, MethodCallHandler, 
       } else {
         startScan18(settings);
       }
-      result.success(null);
+      result.success(true);
     } catch (Exception e) {
       result.error("startScan", e.getMessage(), e);
     }
